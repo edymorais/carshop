@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'corsheaders',
-     'django_filters',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
@@ -121,12 +121,10 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
 STATIC_URL = '/staticfiles/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
