@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from django_filters import rest_framework as filters
 from products.api.serializers import ProductSerializer, ProductImagesSerializer, ProductSpecificationsSerializer, \
     ProductListSerializer, SpecificationSerializer
+from products.filters.filters import SpecificationFilter
 from products.models import Product, ProductSpecifications, ProductImages, Specification
 
 
@@ -97,8 +98,21 @@ class ProductViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=400)
 
 
-class SpecificationsViewSet(viewsets.ViewSet):
-    def list(self, request):
-        queryset = Specification.objects.all()
-        serializer = SpecificationSerializer(queryset, many=True)
-        return Response(serializer.data)
+# class SpecificationsViewSet(viewsets.ViewSet):
+#     filterset_class = SpecificationFilter
+#
+#     def list(self, request):
+#         queryset = Specification.objects.all()
+#         serializer = SpecificationSerializer(queryset, many=True)
+#         return Response(serializer.data)
+
+
+class SpecificationsListViewSet(generics.ListAPIView):
+    queryset = Specification.objects.all()
+    serializer_class = SpecificationSerializer
+    filterset_class = SpecificationFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        return queryset

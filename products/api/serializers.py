@@ -1,8 +1,9 @@
 from django.db import transaction
 from rest_framework import serializers, status
-from rest_framework.response import Response
 
 from products.models import Product, ProductImages, ProductSpecifications, Specification
+
+
 
 
 class ProductImagesSerializer(serializers.ModelSerializer):
@@ -79,4 +80,4 @@ class ProductListSerializer(serializers.ModelSerializer):
 class SpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specification
-        fields = '__all__'
+        fields = ['id', 'name', 'categories']
