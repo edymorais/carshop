@@ -74,3 +74,9 @@ class ProductListSerializer(serializers.ModelSerializer):
             product_specifications.append(specification)
 
         return product_specifications
+
+
+class SpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specification
+        fields = '__all__'

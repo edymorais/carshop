@@ -115,8 +115,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-STATIC_URL = '/static/'
-# STATIC_ROOT = '/home/ced/ponto2/ponto2/static/'
+STATIC_URL = '/staticfiles/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

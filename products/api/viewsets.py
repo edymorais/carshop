@@ -4,8 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from products.api.serializers import ProductSerializer, ProductImagesSerializer, ProductSpecificationsSerializer, \
-    ProductListSerializer
-from products.models import Product, ProductSpecifications, ProductImages
+    ProductListSerializer, SpecificationSerializer
+from products.models import Product, ProductSpecifications, ProductImages, Specification
 
 
 class ProductViewSet(viewsets.ViewSet):
@@ -95,3 +95,10 @@ class ProductViewSet(viewsets.ViewSet):
             serializer.save(product=product)
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+
+class SpecificationsViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = Specification.objects.all()
+        serializer = SpecificationSerializer(queryset, many=True)
+        return Response(serializer.data)
