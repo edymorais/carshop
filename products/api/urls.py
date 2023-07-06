@@ -1,8 +1,6 @@
-from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from carshop import settings
 from products.api.viewsets import ProductViewSet, SpecificationsListViewSet, SpecificationsCategoriesViewSet
 
 router = DefaultRouter()
@@ -13,5 +11,3 @@ urlpatterns = [
     path('api/specifications/', SpecificationsListViewSet.as_view(), name='specifications'),
     path('api/categories-specifications/', SpecificationsCategoriesViewSet.as_view(), name='categories-specifications'),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
