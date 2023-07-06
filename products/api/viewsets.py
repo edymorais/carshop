@@ -7,6 +7,7 @@ from products.api.serializers import ProductSerializer, ProductImagesSerializer,
     ProductListSerializer, SpecificationSerializer
 from products.filters.filters import SpecificationFilter
 from products.models import Product, ProductSpecifications, ProductImages, Specification
+from itertools import groupby
 
 
 class ProductViewSet(viewsets.ViewSet):
@@ -114,5 +115,30 @@ class SpecificationsListViewSet(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-
         return queryset
+
+
+class SpecificationsCategoriesViewSet(generics.ListAPIView):
+    queryset = Specification.objects.all()
+    serializer_class = SpecificationSerializer
+
+    # filterset_class = SpecificationFilter
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        queryset = queryset.order_by('categories', 'name')  # Certifique-se de ordenar por categorias e nome
+
+        grouped_data = []
+        for key, group in groupby(queryset, lambda x: x.categories):
+            group_dict = {
+                'category': key,
+                'specifications': []
+            }
+            for item in group:
+                group_dict['specifications'].append({
+                    'id': item.id,
+                    'name': item.name,
+                })
+            grouped_data.append(group_dict)
+
+        return Response(grouped_data, status=200)
